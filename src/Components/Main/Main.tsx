@@ -5,86 +5,15 @@ import { HeaderLayout } from '../Header/Header';
 import { Ionicons, EvilIcons, Foundation, FontAwesome } from '@expo/vector-icons';
 import { Profile } from '../Profile/Profile';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createAppContainer } from 'react-navigation';
 import { Info } from '../Info/Info';
 import { Feather } from '@expo/vector-icons';
 import { COLOR_BLACK, TEXT_COLOR_RED, COLOR_WHITE } from '../../constants/constants';
 import { Map } from '../Map/Map';
 import { MenuPage as Menu } from '../Menu/Menu';
+import { connect } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { addNavigationHelpers } from 'react-navigation';
 
-
-// const Drawer = createDrawerNavigator({
-//   Bonus: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><Bonus/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Бонусная система',
-//     }),
-//   },
-//   Info: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><Info/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'О нас',
-//     }),
-//   },
-//   Feedback: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><FeedBack/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Оставить отзыв',
-//     }),
-//   },
-//   Actions: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><News/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Новости и акции',
-//     }),
-//   },
-//   Terms: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><Terms/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Пользовательское соглашение',
-//     }),
-//   },
-//   Condition: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><Condition/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Пользовательское соглашение',
-//     }),
-//   },
-//   Contacts: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><View>Контакты</View></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Контакты',
-//     }),
-//   },
-//   Settings: { 
-//     screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><Settings/></HeaderLayout>}, 
-//     navigationOptions : ({navigation}) => ({
-//       title: 'Настройки',
-//     }),
-//   },
-  
-// }, {drawerType: 'front', contentOptions: {
-//   inactiveTintColor: TEXT_COLOR_RED,
-//   activeTintColor: TEXT_COLOR_RED,
-//   labelStyle: {
-//     borderBottomColor: TEXT_COLOR_RED,
-//     borderBottomWidth: 1,
-//     paddingBottom: 15,
-//     paddingTop: 15,
-//     fontWeight: 'normal',
-//     fontSize: 13,
-//     margin: 0,
-//     marginHorizontal: 20,
-//     width: '80%'
-//   },
-//   style: {
-//     width: '100%'
-//   },
-//   drawerStyle: {
-//     width: Dimensions.get('window').width
-//   },
-//   activeBackgroundColor: '#fff'
-// }, navigationOptions: {}})
 
 const Tab = createBottomTabNavigator({
   "Главная": { screen: ({navigation}) => { return <HeaderLayout navigation={navigation}><Action/></HeaderLayout>}, navigationOptions: (route) => ({tabBarIcon: ({focused, tintColor}) => {
@@ -102,13 +31,31 @@ const Tab = createBottomTabNavigator({
   "Menu": { screen: Menu, navigationOptions: { title: '' }},
 },{initialRouteName: "Главная", tabBarOptions: {style: {height: 61, display: 'flex', justifyContent: 'space-between', flexDirection: 'row', width: '125%'}, activeTintColor: TEXT_COLOR_RED, inactiveTintColor: COLOR_BLACK}});
 
+interface IProps {
+  dispatch: any;
+  navigation: any;
+}
 
-// {tabBarIcon: ({focused, tintColor}) => {
-//   return(<View style={{maxWidth: 26}}>
-//     <Ionicons name={'ios-menu'} size={40} color={tintColor} />
-//   </View>
-export default createAppContainer(Tab);
+class Navigator extends React.Component<IProps> {
+  render() {
+    return(
+      <NavigationContainer>
+        <Tab navigation={addNavigationHelpers({
+          dispatch: this.props.dispatch,
+          state: this.props.navigation
+        })}/>
+      </NavigationContainer>
+    )
+  }
+}
 
+// export default createAppContainer(Tab);
+
+const mapStateToProps = state => {
+  navigation: state.navigation
+}
+
+export default connect(mapStateToProps)(Navigator);
 
 const styles = StyleSheet.create({
   container: {
