@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef, useReducer } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import { Terms } from '../Terms/Terms';
 import { Condition } from '../Condition/Condition';
 import { Settings } from '../Settings/Settings';
 import { Confidential } from '../Confidential/Confidential';
+
 const Stack = createStackNavigator();
 
 
@@ -69,33 +70,56 @@ const style = StyleSheet.create({
   }
 })
 
-export const MenuPage: React.FC = () => {
-  return(
-    <Stack.Navigator initialRouteName={"Menu"} 
-    screenOptions={
-      {cardStyle: {backgroundColor: COLOR_WHITE}, 
-      header: ({scene, previous, navigation}) => {
-        const { options } = scene.descriptor;
-        const title = 
-          options.headerTitle !== undefined
-            ? options.headerTitle
-            : options.title !== undefined
-            ? options.title
-            : scene.route.name;
+interface IProps{
+  navigation: any;
+  route: any;
+}
+interface IState{
+  initialRoute: string;
+  routeParams?: string;
+}
 
-            return(
-              <Header navigation={navigation} leftButton={previous ? true : false}/>
-            )
-      }}}>
-      <Stack.Screen name="Bonus" component={Bonus} options={{title: 'Бонусная система'}}/>
-      <Stack.Screen name="Menu" component={({navigation}) => {return(<Menu navigation={navigation}/>)}}/>
-      <Stack.Screen name="Info" component={Info}/>
-      <Stack.Screen name="FeedBack" component={FeedBack}/>
-      <Stack.Screen name="News" component={News}/>
-      <Stack.Screen name="Terms" component={Terms} />
-      <Stack.Screen name="Confidential" component={Confidential}/>
-      <Stack.Screen name="Contacts" component={({navigation}) => {return <Text>Контакты</Text>}}/>
-      <Stack.Screen name="Settings" component={Settings}/>
-    </Stack.Navigator>
-  )
+export class MenuPage extends React.Component<IProps,IState>{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      initialRoute: 'Menu',
+      routeParams: this.props.route.params.comp ? this.props.route.params.comp : null
+    }
+  }
+
+  componentDidMount() {
+    if(this.state.routeParams){
+      this.props.navigation.navigate(this.state.routeParams);
+      this.setState({
+        routeParams: null
+      })
+    }
+    console.log(this.state.routeParams, 'route param')
+  }
+
+  render() {
+    return(
+      <Stack.Navigator initialRouteName={this.state.initialRoute} 
+        screenOptions={
+          {cardStyle: {backgroundColor: COLOR_WHITE}, 
+          header: ({scene, previous, navigation}) => {
+            const { options } = scene.descriptor;
+                return(
+                  <Header navigation={navigation} leftButton={previous ? true : false}/>
+                )
+        }}}>
+        <Stack.Screen name="Bonus" component={Bonus}/>
+        <Stack.Screen name="Menu" component={({navigation}) => {return(<Menu navigation={navigation}/>)}}/>
+        <Stack.Screen name="Info" component={Info}/>
+        <Stack.Screen name="FeedBack" component={FeedBack}/>
+        <Stack.Screen name="News" component={News}/>
+        <Stack.Screen name="Terms" component={Terms} />
+        <Stack.Screen name="Confidential" component={Confidential}/>
+        <Stack.Screen name="Contacts" component={({navigation}) => {return <Text>Контакты</Text>}}/>
+        <Stack.Screen name="Settings" component={Settings}/>
+      </Stack.Navigator>
+    )
+  }
 }

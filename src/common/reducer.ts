@@ -1,8 +1,9 @@
 import { CHANGE_SCREEN } from './actions';
 import { combineReducers } from 'redux';
+import { useNavigation } from '@react-navigation/native';
 
 const initialState = {
-    screen: "Главная"
+    screen: 'InitialState'
 }
 
 

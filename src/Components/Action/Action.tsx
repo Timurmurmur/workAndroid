@@ -1,10 +1,20 @@
 import React from 'react';
 import {View, Image, StyleSheet, ScrollView, Platform, ImageBackground} from 'react-native';
+import { Bonus } from '../Bonus/Bonus';
+import { useNavigation } from '@react-navigation/native';
 const img1 = require('../../assets/1.png');
 const img2 = require('../../assets/2.png');
 const img3 = require('../../assets/ForDelete/3.png');
 
 export const Action = () => {
+  const navigation = useNavigation();
+
+  console.log('navigation',navigation)
+
+  const goToQrCode = (e) => {
+    navigation.navigate('Menu', { comp: 'Bonus' });
+  }
+
   return (
     <ScrollView>
       <View style={style.container}>
@@ -14,7 +24,7 @@ export const Action = () => {
         <View style={style.wrapper}>
           <ImageBackground source={img2} style={style.img}></ImageBackground>
         </View>
-        <View style={style.wrapper}>
+        <View onTouchStart={e => goToQrCode(e)} style={style.wrapper}>
           <ImageBackground source={img3} style={style.img}></ImageBackground>
         </View>
       </View>
