@@ -71,33 +71,31 @@ const style = StyleSheet.create({
 
 export const MenuPage: React.FC = () => {
   return(
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={"Menu"} 
-      screenOptions={
-        {cardStyle: {backgroundColor: COLOR_WHITE}, 
-        header: ({scene, previous, navigation}) => {
-          const { options } = scene.descriptor;
-          const title = 
-            options.headerTitle !== undefined
-              ? options.headerTitle
-              : options.title !== undefined
-              ? options.title
-              : scene.route.name;
+    <Stack.Navigator initialRouteName={"Menu"} 
+    screenOptions={
+      {cardStyle: {backgroundColor: COLOR_WHITE}, 
+      header: ({scene, previous, navigation}) => {
+        const { options } = scene.descriptor;
+        const title = 
+          options.headerTitle !== undefined
+            ? options.headerTitle
+            : options.title !== undefined
+            ? options.title
+            : scene.route.name;
 
-              return(
-                <Header navigation={navigation} leftButton={previous ? true : false}/>
-              )
-        }}}>
-        <Stack.Screen name="Bonus" component={Bonus} options={{title: 'Бонусная система'}}/>
-        <Stack.Screen name="Menu" component={({navigation}) => {return(<Menu navigation={navigation}/>)}}/>
-        <Stack.Screen name="Info" component={Info}/>
-        <Stack.Screen name="FeedBack" component={FeedBack}/>
-        <Stack.Screen name="News" component={News}/>
-        <Stack.Screen name="Terms" component={Terms} />
-        <Stack.Screen name="Confidential" component={Confidential}/>
-        <Stack.Screen name="Contacts" component={({navigation}) => {return <Text>Контакты</Text>}}/>
-        <Stack.Screen name="Settings" component={Settings}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+            return(
+              <Header navigation={navigation} leftButton={previous ? true : false}/>
+            )
+      }}}>
+      <Stack.Screen name="Bonus" component={Bonus} options={{title: 'Бонусная система'}}/>
+      <Stack.Screen name="Menu" component={({navigation}) => {return(<Menu navigation={navigation}/>)}}/>
+      <Stack.Screen name="Info" component={Info}/>
+      <Stack.Screen name="FeedBack" component={FeedBack}/>
+      <Stack.Screen name="News" component={News}/>
+      <Stack.Screen name="Terms" component={Terms} />
+      <Stack.Screen name="Confidential" component={Confidential}/>
+      <Stack.Screen name="Contacts" component={({navigation}) => {return <Text>Контакты</Text>}}/>
+      <Stack.Screen name="Settings" component={Settings}/>
+    </Stack.Navigator>
   )
 }

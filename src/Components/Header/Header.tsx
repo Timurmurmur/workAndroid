@@ -7,7 +7,7 @@ import { Drawer } from '../Drawer/Drawer';
 
 export const HeaderLayout = ({navigation, children}) => {
   return(
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Header navigation={navigation} />
       {children}
     </View>

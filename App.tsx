@@ -42,7 +42,7 @@ function App(props) {
   } else {
     return (
       <Provider store={store}>
-        <SafeAreaView style={{flex: 1, position: 'relative'}} forceInset={{ top: 'always', bottom: 'always' }}>
+        <SafeAreaView style={{flex: 1, position: 'relative', backgroundColor: '#fff'}} forceInset={{ top: 'always', bottom: 'always' }}>
           <Main/>
         </SafeAreaView>
       </Provider>

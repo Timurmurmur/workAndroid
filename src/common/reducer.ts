@@ -1,5 +1,6 @@
 import { CHANGE_SCREEN } from './actions';
 import { combineReducers } from 'redux';
+
 const initialState = {
     screen: "Главная"
 }
